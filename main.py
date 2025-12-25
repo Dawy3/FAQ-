@@ -16,6 +16,9 @@ import os
 import uuid
 import tempfile
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = FastAPI(title="FAQ")
 # --- Configuration --
 # OpenRouter Configuration
@@ -26,7 +29,7 @@ MODEL_NAME = os.getenv("MODEL_NAME")
 # Initialize PC
 pc = Pinecone(api_key= os.getenv("PINECONE_API_KEY"))
 
-INDEX_NAME= "FAQ"
+INDEX_NAME= "faq-rag"
 
 # Initialize Embedding model
 embeddings = HuggingFaceEmbeddings(
