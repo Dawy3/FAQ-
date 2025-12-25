@@ -257,19 +257,7 @@ async def query_rag(request: QueryResponse):
         num_source_used= len(result["documents"])
     )
     
-@app.get("/index/stats")
-async def get_index_status():
-    """Get pinecone index statistics"""
-    index = pc.Index(INDEX_NAME)
-    stats = index.describe_index_stats()
-    
-    return{
-        "total_vectorstore": stats.total_vector_count,
-        "dimension" : stats.dimension,
-        "Index_fullness" : stats.index_fullness,
-        "namespace" : stats.namespace
-    }
-    
+
     
     
                 
