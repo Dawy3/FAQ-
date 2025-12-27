@@ -73,7 +73,7 @@ def test_query_endpoint_no_context(mock_ainvoke):
     }
 
     # 2. Make request
-    response = client.post("/query", json={"query": "What is the meaning of life?"})
+    response = client.post("/api/v1/query", json={"query": "What is the meaning of life?"})
 
     # 3. Assertions
     assert response.status_code == 200
@@ -111,7 +111,7 @@ def test_upload_invalid_file_type():
     files = {
         'file': ('image.png', b'image data', 'image/png')
     }
-    response = client.post("/document/upload", files=files)
+    response = client.post("/api/v1/document/upload", files=files)
     
     assert response.status_code == 400
     assert "Only PDF files are supported" in response.json()["detail"]
