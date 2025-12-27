@@ -36,7 +36,14 @@ def get_vectorstore():
         embedding= embeddings
     )
     
-# Singleton instance
-vectorstore = get_vectorstore()
+# Add a function to get it on demand
+_vectorstore = None
+
+def get_active_vectorstore():
+    global _vectorstore
+    if _vectorstore is None:
+        # This will only run when the API actually needs it
+        _vectorstore = get_vectorstore()
+    return _vectorstore
         
     

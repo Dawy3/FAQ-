@@ -9,7 +9,7 @@ from langgraph.graph import StateGraph, START, END
 
 from app.config import config
 from app.core.state import AgentState
-from app.services.vector_store import vectorstore
+from app.services.vector_store import get_active_vectorstore
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +44,7 @@ async def retrieve_document(state: AgentState):
     logger.info(f"Retrieveing for: {q}")
     
     # Retrieve slightly more docs to allow for filtering
+    vectorstore = get_active_vectorstore()
     docs = vectorstore.similarity_search(query=q, k= 5)
     return {"documents" : docs}
 

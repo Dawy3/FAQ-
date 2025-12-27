@@ -5,7 +5,7 @@ import uuid
 import logging
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from app.services.vector_store import vectorstore
+from app.services.vector_store import get_active_vectorstore
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +33,7 @@ def ingest_pdf(file_path: str, filename: str) -> int :
                 "filename": filename
             })
             
+        vectorstore = get_active_vectorstore()
         vectorstore.add_documents(chunks)
         
         return len(chunks)

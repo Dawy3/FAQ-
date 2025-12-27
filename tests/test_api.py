@@ -31,13 +31,16 @@ def mock_ingestion():
     return 15  # Simulates 15 chunks being indexed
 
 # --- The Tests ---
-
+@patch("app.services.vector_store.get_active_vectorstore")
 @patch("app.api.v1.endpoints.rag_graph.ainvoke", new_callable=AsyncMock)
-def test_query_endpoint_success(mock_ainvoke, mock_graph_response):
+def test_query_endpoint_success(mock_ainvoke, mock_vectorstore, mock_graph_response):
     """
     Test the /query endpoint.
     We mock the graph's 'ainvoke' method to return our fake response immediately.
     """
+    # Mock the vectorstore so it doesn't try to connect to Pinecone
+    mock_vectorstore.return_value = MagicMock() 
+        
     # 1. Setup the mock behavior
     mock_ainvoke.return_value = mock_graph_response
 
